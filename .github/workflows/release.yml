@@ -1,9 +1,8 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "v*"
+  release:
+    types: [published]
 
 env:
   DOTNET_VERSION: "10.0.x"
@@ -18,6 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Build the code the release points at, not the default branch
+          ref: ${{ github.event.release.tag_name }}
 
       - uses: actions/setup-dotnet@v4
         with:
@@ -35,10 +37,22 @@ jobs:
       - name: Build and package
         run: dotnet run --project CakeBuild --configuration Release -- --target=Package
 
-      - name: Publish GitHub release
+      - name: Attach mod zips to the release
+        run: gh release upload "${{ github.event.release.tag_name }}" Releases/*.zip --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      # GitHub normally creates the tag automatically when the release is made;
+      # create it here if it doesn't exist yet so the tag is an output of the release.
+      - name: Ensure git tag exists
         run: |
-          gh release create "${GITHUB_REF_NAME}" Releases/*.zip \
-            --title "${GITHUB_REF_NAME}" \
-            --generate-notes
+          TAG="${{ github.event.release.tag_name }}"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          if git fetch origin "refs/tags/$TAG" 2>/dev/null; then
+            echo "Tag $TAG already exists"
+          else
+            git tag "$TAG" "${{ github.sha }}"
+            git push origin "refs/tags/$TAG"
+          fi
         env:
           GH_TOKEN: ${{ github.token }}
