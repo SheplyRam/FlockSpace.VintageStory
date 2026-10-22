@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Flock.Attributes/Flock.Attributes.csproj" />
+  <Project Path="CakeBuild/CakeBuild.csproj" />
+  <Project Path="Flock.Shared/Flock.Shared.csproj" />
+  <Project Path="Flock.Traits/Flock.Traits.csproj" />
+</Solution>

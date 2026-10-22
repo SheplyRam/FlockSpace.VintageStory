@@ -1,0 +1,15 @@
+{
+    "$schema": "https://moddbcdn.vintagestory.at/schema/modinfo.latest.json",
+    "type": "Code",
+    "modid": "flockspaceattributesmod",
+    "name": "Flock Attributes",
+    "authors": [
+        "sheply"
+    ],
+    "description": "A mod that introduces a patch system for character traits and attributes",
+    "version": "1.0.0",
+    "dependencies": {
+        "game": "1.21.0",
+        "flockspacesharedlib": "1.0.0"
+    }
+}

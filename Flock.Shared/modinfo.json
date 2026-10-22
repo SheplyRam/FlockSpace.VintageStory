@@ -1,0 +1,14 @@
+{
+    "$schema": "https://moddbcdn.vintagestory.at/schema/modinfo.latest.json",
+    "type": "Code",
+    "modid": "flockspacesharedlib",
+    "name": "Flock Shared Library",
+    "authors": [
+        "sheply"
+    ],
+    "description": "A shared library associated with other Flock Space mods",
+    "version": "1.0.0",
+    "dependencies": {
+        "game": "1.21.0"
+    }
+}
