@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  DOTNET_VERSION: "10.0.x"
+  # Must match the "game" dependency in each mod's modinfo.json
+  VINTAGE_STORY_VERSION: "1.21.0"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      # The projects reference Vintage Story DLLs via the VINTAGE_STORY env var,
+      # so download the server archive (contains API, Lib and stock mods) on the runner.
+      - name: Download Vintage Story ${{ env.VINTAGE_STORY_VERSION }}
+        run: |
+          curl -fSL "https://cdn.vintagestory.at/gamefiles/stable/vs_server_linux-x64_${VINTAGE_STORY_VERSION}.tar.gz" -o vs.tar.gz
+          mkdir -p "$RUNNER_TEMP/vintagestory"
+          tar -xzf vs.tar.gz -C "$RUNNER_TEMP/vintagestory"
+          echo "VINTAGE_STORY=$RUNNER_TEMP/vintagestory" >> "$GITHUB_ENV"
+
+      - name: Build and package
+        run: dotnet run --project CakeBuild --configuration Release -- --target=Package
+
+      - name: Publish GitHub release
+        run: |
+          gh release create "${GITHUB_REF_NAME}" Releases/*.zip \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
