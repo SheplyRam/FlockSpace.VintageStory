@@ -1,46 +1,50 @@
+using Flock.Shared;
+using Flock.Shared.API;
 using Flock.Shared.Collections;
-using Flock.Shared.Common;
 using Flock.Shared.DependencyInjection;
 using Flock.Shared.Events;
 using Flock.Shared.HotKeys;
+using Flock.Shared.Traits;
 using Flock.Traits.Common;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 
-[assembly: ModInfo("Flock Traits", "flockspacetraitsmod",
-    Authors = new string[] { "sheply" },
-    Description = "A mod that introduces traits and actions!",
-    Version = "1.0.0")]
-
 namespace Flock.Traits;
 
+/// <summary>
+/// Entry-point shell of the traits gameplay mod: wires the IoC scope, registers the trait mechanics, and raises the
+/// lifecycle events they subscribe to.
+/// </summary>
 public sealed class FlockTraitsModSystem : ModSystem
 {
+    /// <summary>
+    /// Composition root of this mod; mechanics register here during <see cref="StartPre"/>.
+    /// </summary>
+    public GameSystemManager Systems { get; init; }
+
+    /// <summary>The IoC scope the systems resolve their dependencies from.</summary>
+    internal IIocManager Dependencies { get; init; }
+
     public FlockTraitsModSystem()
     {
-        Dependencies = new DependencyCollection();
+        Dependencies = new IoCManager();
         Dependencies.Register<IEventBus, EventBus>();
 
         Systems = new GameSystemManager(Dependencies);
     }
 
-    public GameSystemManager Systems { get; init; }
-
-    internal IDependencyCollection Dependencies { get; init; }
-
     public override void StartPre(ICoreAPI api)
     {
         Dependencies.RegisterInstance(Mod);
+        Dependencies.RegisterInstance(api);
+        Dependencies.RegisterModSystem<FlockSharedTraitsModSystem>();
 
         Systems.Register<HotKeyGameSystem>();
-        Systems.Register<GameActionManagerSystem>();
+        Systems.Register<GameTraitAttributeManagerSystem>();
         Systems.Initialize();
     }
 
-
-    // Called on server and client
-    // Useful for registering block/entity classes on both sides
     public override void Start(ICoreAPI api)
     {
         Dependencies.RegisterInstance(api);

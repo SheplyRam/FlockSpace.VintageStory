@@ -1,13 +1,19 @@
-﻿using Flock.Shared.Common;
+using Flock.Shared.API;
 using System;
 using Vintagestory.API.Client;
 
 namespace Flock.Shared.HotKeys;
 
+/// <summary>
+/// Client-side system through which mods register their hotkeys with the game's input system.
+/// </summary>
 public sealed class HotKeyGameSystem : GameSystem
 {
     public override string Id => "flockspacesharedlib:hotkeys";
 
+    /// <summary>
+    /// Registers the binding and its handler with the client input system.
+    /// </summary>
     public void RegisterHotKey(string code, HotKeyEntry hotKey)
     {
         ArgumentNullException.ThrowIfNull(hotKey);

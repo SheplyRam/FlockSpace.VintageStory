@@ -1,0 +1,15 @@
+[
+  {
+    "enabled": true,
+    "file": "game:entities/humanoid/player.json",
+    "op": "addmerge",
+    "path": "/client/animations",
+    "value": [
+      {
+        "code": "ft_unarmedbite",
+        "animation": "ft_unarmedbite",
+        "withFpVariant": true
+      }
+    ]
+  }
+]

@@ -1,3 +1,12 @@
 {
-    "hello": "hello world!"
+    "cmd-fsatinfo-desc": "Show your composite satiation state (satiation, poison, psychedelics, storage, resistances)",
+    "cmd-fsatset-desc": "Set your aggregate hunger value; excess stored poison/psychedelics are clamped away",
+    "cmd-fsatgive-desc": "Add stored poison or psychedelics to your hunger bar (requires the matching storage trait)",
+    "cmd-fsatdrain-desc": "Drain aggregate hunger through the real composite-drain path (psychedelics drain before poison)",
+    "cmd-fsatclear-desc": "Empty your stored poison and psychedelics (aggregate hunger is left in place)",
+    "cmd-fsat-requiresplayer": "Only players with the satiation behavior can use this command.",
+    "cmd-fsat-nohunger": "No hunger behavior on this entity.",
+    "cmd-fsat-requirespoisonstorage": "Requires the poison storage attribute (Venomous Bites trait); the reconcile tick would drop an unsupported pool.",
+    "cmd-fsat-requirespsystorage": "Requires the psychedelic storage attribute (Psychedelic Bites trait); the reconcile tick would drop an unsupported pool.",
+    "cmd-fsatinfo-line": "satiation {0:0.#}/{1:0.#} | stored poison={2:0.#} (load {3:0.#}) | stored psy={4:0.#} (load {5:0.#}) | storage: poison={6} psy={7} | resist: poison={8:0.##} psy={9:0.##}"
 }

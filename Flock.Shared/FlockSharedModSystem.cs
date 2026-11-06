@@ -1,11 +1,8 @@
-﻿using Vintagestory.API.Common;
-
-[assembly: ModInfo("Flock Shared Library", "flockspacesharedlib",
-    Authors = new string[] { "sheply" },
-    Description = "A shared library associated with other Flock Space mods",
-    Version = "1.0.0")]
+using Vintagestory.API.Common;
 
 namespace Flock.Shared;
 
-public sealed class FlockSharedModSystem : ModSystem { }
- 
+/// <summary>
+/// Not really used for now.
+/// </summary>
+public sealed class FlockSharedModSystem : ModSystem;

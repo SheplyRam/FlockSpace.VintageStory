@@ -3,8 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>bin\$(Configuration)\Mods</OutputPath>
+    <OutputPath>bin\$(Configuration)\Modpack\flockspacetraitsmod\</OutputPath>
     <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(BuildingAsDependency)' == 'true'">
+    <OutputPath>obj\Dependency\bin\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,11 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Flock.Attributes\Flock.Attributes.csproj">
-      <AdditionalProperties>BuildingAsDependency=true</AdditionalProperties>
-    </ProjectReference>
     <ProjectReference Include="..\Flock.Shared\Flock.Shared.csproj">
       <AdditionalProperties>BuildingAsDependency=true</AdditionalProperties>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
 
@@ -59,6 +61,9 @@
 
   <ItemGroup>
     <Content Include="modinfo.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\**">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

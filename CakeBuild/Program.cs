@@ -28,7 +28,7 @@ public static class Program
 public class BuildContext : FrostingContext
 {
     // In dependency order
-    public static readonly string[] AllProjects = { "Flock.Shared", "Flock.Attributes", "Flock.Traits" };
+    public static readonly string[] AllProjects = { "Flock.Shared", "Flock.Traits" };
 
     public string BuildConfiguration { get; }
     public bool SkipJsonValidation { get; }
@@ -123,10 +123,10 @@ public sealed class PackageTask : FrostingTask<BuildContext>
             context.CleanDirectory(releaseDir);
 
             // Copy the publish output, but never bundle a sibling Flock.* mod assembly
-            var publishFiles = context.GetFiles($"../{project}/bin/{context.BuildConfiguration}/Mods/publish/*");
+            var publishFiles = context.GetFiles($"../{project}/bin/{context.BuildConfiguration}/Modpack/{modInfo.ModID}/publish/*");
             foreach (var other in BuildContext.AllProjects.Where(p => p != project))
             {
-                publishFiles -= context.GetFiles($"../{project}/bin/{context.BuildConfiguration}/Mods/publish/{other}.*");
+                publishFiles -= context.GetFiles($"../{project}/bin/{context.BuildConfiguration}/Modpack/{modInfo.ModID}/publish/{other}.*");
             }
             context.CopyFiles(publishFiles, releaseDir);
 

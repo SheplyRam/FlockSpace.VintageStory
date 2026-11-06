@@ -1,3 +1,15 @@
 {
-    "hello": "hello world!"
+  "trait-ft_bite": "Unarmed Bite",
+  "traitdesc-ft_bite": "You can bite with your bare jaws. Press B while unarmed to bite a nearby creature for 1 point of piercing damage. Required by the Venomous Bites and Psychedelic Bites traits.",
+  "charattribute-ft_bite-1": "Unarmed bite: press B while unarmed to bite a nearby creature (required by the venomous and psychedelic bite traits)",
+  "trait-ft_venomousbites": "Venomous Bites",
+  "traitdesc-ft_venomousbites": "Your body can hold poison in place of food. Poisonous meals still feed you, but 30% of their satiety is stored as poison until your real hunger runs out. Maximum hunger +40%. Unarmed bites transfer stored poison to your target. Requires the Unarmed Bite trait. Includes 15% poison resistance.",
+  "trait-ft_psychedelicbites": "Psychedelic Bites",
+  "traitdesc-ft_psychedelicbites": "Your body can hold psychedelics in place of food. Psychedelic meals still feed you, but 30% of their satiety is stored as psychedelics until your real hunger runs out. Maximum hunger +40%. Unarmed bites transfer stored psychedelics to your target. Requires the Unarmed Bite trait. Includes 15% psychedelic resistance.",
+  "charattribute-ft_poisonstorage-1": "Poison storage: poisonous food satiates you, storing 30% of its satiety as poison (maximum hunger +40%)",
+  "charattribute-ft_venomousbite-1": "Venomous bite: unarmed bites transfer stored poison to the target (requires unarmed bite capability)",
+  "charattribute-ft_poisonresistance-0.15": "Poison resistance: reduces poison effects by 15%",
+  "charattribute-ft_psychedelicstorage-1": "Psychedelic storage: psychedelic food satiates you, storing 30% of its satiety as psychedelics (maximum hunger +40%)",
+  "charattribute-ft_psychedelicbite-1": "Psychedelic bite: unarmed bites transfer stored psychedelics to the target (requires unarmed bite capability)",
+  "charattribute-ft_psychedelicresistance-0.15": "Psychedelic resistance: reduces psychedelic effects by 15%"
 }

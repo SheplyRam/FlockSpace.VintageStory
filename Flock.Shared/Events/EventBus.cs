@@ -1,8 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Flock.Shared.Events;
 
+/// <summary>
+/// Default <see cref="IEventBus"/> implementation.
+/// </summary>
 public sealed class EventBus : IEventBus
 {
     private readonly Dictionary<Type, List<Delegate>> _broadcastHandlers = [];
@@ -10,6 +13,8 @@ public sealed class EventBus : IEventBus
 
     public void RaiseEvent<TEvent>(ref TEvent evt) where TEvent : notnull
     {
+        // Snapshot before invoking: a handler that (un)subscribes mid-dispatch must not affect the current fan-out or
+        // skip a remaining handler.
         var allHandlers = new List<Delegate>();
         if (_broadcastHandlers.TryGetValue(typeof(TEvent), out var handlers))
             allHandlers.AddRange(handlers);
@@ -24,13 +29,17 @@ public sealed class EventBus : IEventBus
             try
             {
                 ((BroadcastDelegate<TEvent>)handler)(ref evt);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 var target = handler.Target ?? handler;
-                throw new InvalidOperationException($"Couldn't continue with the event handling for {target}: {e.Message}");
+                throw new InvalidOperationException(
+                    $"Couldn't continue with the event handling for {target}: {e.Message}");
             }
         }
 
+        // Once-handlers ran above; drop them from the temp list regardless of which of them actually executed, so a
+        // second raise never re-runs them.
         if (onceHandlers != null)
         {
             foreach (var temphandler in onceHandlers.ToArray())
